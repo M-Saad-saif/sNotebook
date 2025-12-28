@@ -1,8 +1,11 @@
 const connectToMongoose = require("./db");
 const express = require("express");
+var cors = require('cors')
+var app = express()
 
 connectToMongoose();
-const app = express();
+
+app.use(cors())
 const port = 5000;
 
 // using middleware...When a client sends data in JSON format (usually in POST, PUT, PATCH requests), Express cannot read it by default.
