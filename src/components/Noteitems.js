@@ -17,27 +17,36 @@ export default function Noteitems(props) {
         </div>
       </div>
       <div className="brutalist-card__message">
-        <textarea
+        <p
           name=""
           id=""
           rows={5}
-          style={{ width: "105%", textAlign: "justify", margin: "0px -6px", border:"none" }}
+          
+          style={{
+            width: "105%",
+            textAlign: "justify",
+            margin: "0px -6px",
+            border: "none",
+          }}
         >
           {note.description}
-        </textarea>
+        </p>
         <p className="my-3">
           <strong>Tag: </strong>
           {note.tag}
         </p>
       </div>
+
       <i
-        className="fa-solid fa-trash-can"
+        title="Delete note"
+        className="fa-solid fa-trash-can trash-icon"
         onClick={() => {
           deleteNote(note._id);
         }}
       ></i>
       <i
-        className="fa-solid fa-pen-to-square"
+        title="Update note"
+        className="fa-solid fa-pen-to-square mx-1 edit-icon"
         onClick={() => {
           updateNote(note);
         }}

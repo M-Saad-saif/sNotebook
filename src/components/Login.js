@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function Login(props) {
   const [showPassword, setShowPassword] = useState("");
   const [credential, setCredential] = useState({ email: "", password: "" });
 
@@ -26,11 +26,12 @@ export default function Login() {
     });
     const json = await response.json();
     console.log(json);
-    if (json.success === true) {
+    if (json.success) {
       localStorage.setItem("token", json.authtoken);
       history("/");
+      props.showAlert("LogedIn successfully", "success");
     } else {
-      alert("invalid");
+      props.showAlert("invalid credentials", "danger");
     }
   };
 
@@ -85,7 +86,7 @@ export default function Login() {
         </div>
 
         <button className="my-1" type="submit">
-          SIGN IN
+          LOGIN
         </button>
 
         <div className="divider my-1">OR</div>

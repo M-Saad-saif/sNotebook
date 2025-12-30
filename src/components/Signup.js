@@ -1,28 +1,69 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-export default function Signup() {
-  const [showPassword, setShowPassword] = useState(false);
+export default function Signup(props) {
+  let history = useNavigate();
+  const [showPassword, setShowPassword] = useState("");
+  const [credential, setCredential] = useState({
+    name: "",
+    email: "",
+    password: "",
+    cpassword: "",
+  });
 
   const togglePassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { name, email, password } = credential;
+
+    const response = await fetch("http://localhost:5000/api/auth/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        password,
+      }),
+    });
+    const json = await response.json();
+    console.log(json);
+    
+    if (json.success) {
+      localStorage.setItem("token", json.authtoken);
+      history("/");
+      props.showAlert("Created account successfully", "success");
+    } else {
+      props.showAlert("Invalid Credential", "danger");
+    }
+  };
+
+  const onChange = (e) => {
+    setCredential({ ...credential, [e.target.name]: e.target.value });
   };
 
   return (
     <form
       action=""
       className="loginform-container d-flex justify-content-center"
+      onSubmit={handleSubmit}
     >
-      <div className="login-container justify-content-center">
+      <div className="login-container justify-content-center ">
         <h1>SIGN UP</h1>
 
         <div className="input-group">
           <label htmlFor="username">USERNAME</label>
           <input
-            type="username"
+            type="text"
             id="username"
-            name="username"
+            name="name"
             placeholder="Enter Name"
+            onChange={onChange}
+            value={credential.name}
           />
         </div>
 
@@ -33,6 +74,8 @@ export default function Signup() {
             id="email"
             name="email"
             placeholder="your@email.com"
+            onChange={onChange}
+            value={credential.email}
           />
         </div>
 
@@ -44,6 +87,10 @@ export default function Signup() {
             name="password"
             placeholder="••••••••"
             style={{ paddingRight: "30px" }}
+            onChange={onChange}
+            value={credential.password}
+            minLength={4}
+            required
           />
           <i
             className={`fa-solid fa-eye${showPassword ? "-slash" : ""}`}
@@ -67,6 +114,10 @@ export default function Signup() {
             name="cpassword"
             placeholder="••••••••"
             style={{ paddingRight: "30px" }} // space for the eye icon
+            onChange={onChange}
+            value={credential.cpassword}
+            minLength={4}
+            required
           />
           <i
             className={`fa-solid fa-eye${showPassword ? "-slash" : ""}`}

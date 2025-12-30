@@ -25,6 +25,7 @@ router.post(
       .withMessage("must contain a number"),
   ],
   async (req, res) => {
+    let success = false;
     // if there are error return bad statu using express validator
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -40,7 +41,7 @@ router.post(
       if (user) {
         return res
           .status(400)
-          .json({ error: "User with this email already exist" });
+          .json({ success, error: "User with this email already exist" });
       }
 
       // saving user in moongese and creating new users
@@ -57,10 +58,8 @@ router.post(
       };
       // giving user the authtoken in json form
       const authtoken = jwt.sign(data, JWT_SECRET);
-      res.json({ authtoken });
-
-      // returning result into json
-      // res.json(user);
+      success = true;
+      res.json({ success, authtoken });
     } catch (error) {
       console.log(error.message);
       res.status(500).json("some error occured");
@@ -97,7 +96,6 @@ router.post(
       // checking if the email is wrong
       let user = await User.findOne({ email });
       if (!user) {
-        success = false;
         return res
           .status(400)
           .json({ success, error: "login with correct credentials" });
@@ -106,7 +104,6 @@ router.post(
       // checking if the password is wrong
       let comparePass = await bcrypt.compare(password, user.password);
       if (!comparePass) {
-        success = false;
         return res
           .status(400)
           .json({ success, error: "login with correct credentials" });
@@ -121,7 +118,7 @@ router.post(
       // giving user the authtoken in json form usign JWT
       const authtoken = jwt.sign(data, JWT_SECRET);
       success = true;
-      res.json({success, authtoken});
+      res.json({ success, authtoken });
     } catch (error) {
       console.log(error.message);
       res.status(500).json("some error occured");
