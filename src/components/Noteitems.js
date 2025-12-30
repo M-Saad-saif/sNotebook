@@ -7,35 +7,41 @@ export default function Noteitems(props) {
   const { note, updateNote } = props;
 
   return (
-    <div className="col-md-3 my-3">
-      <div className="card">
-        <div className="card-body">
-          <h5 className="card-title" style={{ textAlign: "center" }}>
-            {note.title}
-          </h5>
-          <hr className="my-0" />
-          <p className="card-text" style={{ textAlign: "justify" }}>
-            {note.description}
-          </p>
-
-          <p className="card-text">
-            <strong>Tag: </strong> {note.tag}
-          </p>
-          <hr className="my-0" />
-          <i
-            className="fa-solid fa-trash-can"
-            onClick={() => {
-              deleteNote(note._id);
-            }}
-          ></i>
-          <i
-            className="fa-solid fa-pen-to-square"
-            onClick={() => {
-              updateNote(note);
-            }}
-          ></i>
+    <div className="brutalist-card mx-3 my-3">
+      <div className="brutalist-card__header ">
+        <div
+          className="brutalist-card__alert text-center"
+          style={{ textAlign: "center" }}
+        >
+          <i className="fa-solid fa-star"></i> {note.title}
         </div>
       </div>
+      <div className="brutalist-card__message">
+        <textarea
+          name=""
+          id=""
+          rows={5}
+          style={{ width: "105%", textAlign: "justify", margin: "0px -6px", border:"none" }}
+        >
+          {note.description}
+        </textarea>
+        <p className="my-3">
+          <strong>Tag: </strong>
+          {note.tag}
+        </p>
+      </div>
+      <i
+        className="fa-solid fa-trash-can"
+        onClick={() => {
+          deleteNote(note._id);
+        }}
+      ></i>
+      <i
+        className="fa-solid fa-pen-to-square"
+        onClick={() => {
+          updateNote(note);
+        }}
+      ></i>
     </div>
   );
 }

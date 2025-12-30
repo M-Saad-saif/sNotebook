@@ -12,7 +12,7 @@ const JWT_SECRET = "iamcaptainsaadsaif";
 router.post(
   "/create",
 
-  // validation suing express validator 
+  // validation suing express validator
   [
     body("name", "Enter proper name").isLength({ min: 2 }),
     body("email", "Enter proper email").isEmail(),
@@ -84,6 +84,8 @@ router.post(
       .withMessage("Must contain a number"),
   ],
   async (req, res) => {
+    let success = false;
+
     // if there are error return bad statu  usign express validator
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -95,17 +97,19 @@ router.post(
       // checking if the email is wrong
       let user = await User.findOne({ email });
       if (!user) {
+        success = false;
         return res
           .status(400)
-          .json({ error: "login with correct credentials" });
+          .json({ success, error: "login with correct credentials" });
       }
 
       // checking if the password is wrong
       let comparePass = await bcrypt.compare(password, user.password);
       if (!comparePass) {
+        success = false;
         return res
           .status(400)
-          .json({ error: "login with correct credentials" });
+          .json({ success, error: "login with correct credentials" });
       }
 
       const data = {
@@ -116,7 +120,8 @@ router.post(
 
       // giving user the authtoken in json form usign JWT
       const authtoken = jwt.sign(data, JWT_SECRET);
-      res.json(authtoken);
+      success = true;
+      res.json({success, authtoken});
     } catch (error) {
       console.log(error.message);
       res.status(500).json("some error occured");
@@ -125,7 +130,7 @@ router.post(
 );
 
 // ROUTE 3: get loggedIn  user detail : POST '/api/auth/hetuser. login required
-// using middle ware 
+// using middle ware
 router.post("/getuser", fetchuser, async (req, res) => {
   try {
     const userId = req.user.id;

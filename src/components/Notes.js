@@ -142,7 +142,7 @@ export default function Notes() {
           </div>
         </div>
       </div>
-      <div className="row home-saved-container   my-3 ">
+      <div className="row home-saved-container my-3 justify-content-center ">
         <h2>Your saved notes</h2>
 
         {/* if there is no notes display this msg */}
