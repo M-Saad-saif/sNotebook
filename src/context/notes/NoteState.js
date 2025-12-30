@@ -21,12 +21,13 @@ const NoteState = (props) => {
     });
     const json = await response.json();
     console.log(json);
-    setNotes(json)
+    setNotes(json);
   };
 
   // adding a note
   const addnote = async (title, description, tag) => {
     // API calls
+    // adding note from backend
     const response = await fetch(`${host}/api/notes/addnote`, {
       method: "POST",
       headers: {
@@ -37,24 +38,16 @@ const NoteState = (props) => {
       body: JSON.stringify({ title, description, tag }),
       // …
     });
-    const json = response.json();
-    console.log("adding a note");
-
-    const note = {
-      _id: "69503373c506sadf44540b4cea8f",
-      user: "69501e424ebb84e5493d0ced",
-      title: title,
-      description: description,
-      tag: tag,
-      date: "2025-12-27T19:45:00.411Z",
-      __v: 0,
-    };
+    const note = await response.json();
+    // adding note from frontend
     setNotes(notes.concat(note));
+    console.log("adding a note", note);
   };
 
   // deleteign note
   const deleteNote = async (id, title, description, tag) => {
     // API calls
+    // deleting note from backend
     const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
       method: "DELETE",
       headers: {
@@ -65,9 +58,11 @@ const NoteState = (props) => {
       body: JSON.stringify({ title, description, tag }),
       // …
     });
-    const json = response.json();
+    const json = await response.json();
     console.log("note deleted with id of: " + id);
+    console.log(json);
 
+    // deleting note from frontend
     const newNotes = notes.filter((note) => {
       return note._id !== id;
     });
@@ -76,29 +71,34 @@ const NoteState = (props) => {
 
   // editing note
   const editNote = async (id, title, description, tag) => {
-    for (let index = 0; index < notes.length; index++) {
-      const element = notes[index];
+    // API calls
+    // edit note from backend
+    const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjk1MDFlNDI0ZWJiODRlNTQ5M2QwY2VkIn0sImlhdCI6MTc2Njg1ODMwNn0.WGmD5X40uDzFf78kzgPi2hgo1RJOxSlRBjsZaQLllfk",
+      },
+      body: JSON.stringify({ title, description, tag }),
+      // …
+    });
+    const json = await response.json();
+    console.log(json);
 
-      // API calls
-      const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token":
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjk1MDFlNDI0ZWJiODRlNTQ5M2QwY2VkIn0sImlhdCI6MTc2Njg1ODMwNn0.WGmD5X40uDzFf78kzgPi2hgo1RJOxSlRBjsZaQLllfk",
-        },
-        body: JSON.stringify({ title, description, tag }),
-        // …
-      });
-      const json = response.json();
+    let newNotes = JSON.parse(JSON.stringify(notes));
 
-      // logic to edit notes
+    // logic to edit notes
+    for (let index = 0; index < newNotes.length; index++) {
+      const element = newNotes[index];
       if (element._id === id) {
-        element.title = title;
-        element.description = description;
-        element.tag = tag;
+        newNotes[index].title = title;
+        newNotes[index].description = description;
+        newNotes[index].tag = tag;
+        break;
       }
     }
+    setNotes(newNotes);
   };
 
   return (

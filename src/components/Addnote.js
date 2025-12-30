@@ -8,50 +8,85 @@ export default function Addnote() {
   const [note, setNote] = useState({
     title: "",
     description: "",
-    tag: "---", 
+    tag: "",
   });
 
   const handleaddclick = (e) => {
     e.preventDefault();
     addnote(note.title, note.description, note.tag);
+    setNote({
+      title: "",
+      description: "",
+      tag: "",
+    });
   };
 
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
   };
+
   return (
     <div className="container">
       <h2>Add your notes</h2>
       <form>
-        <div className="mb-3">
-          <label htmlFor="title" className="form-label">
-            Title
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="title"
-            aria-describedby="title"
-            name="title"
-            onChange={onChange}
-          />
+        <div className="mb-3 my-3 ">
+          <div className="input-group">
+            <input
+              type="text"
+              className=" input"
+              style={{ width: "100%" }}
+              id="title"
+              name="title"
+              value={note.title}
+              autoComplete="off"
+              required
+              onChange={onChange}
+            />
+            <label htmlFor="title" className="form-label user-label">
+              Title
+            </label>
+          </div>
         </div>
         <div className="mb-3">
-          <label htmlFor="description" className="form-label">
-            Description
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="description"
-            name="description"
-            onChange={onChange}
-          />
+          <div className="input-group my-4">
+            <textarea
+              type="text"
+              className=" input"
+              style={{ width: "100%" }}
+              id="description"
+              name="description"
+              value={note.description}
+              autoComplete="off"
+              required
+              rows={1}
+              onChange={onChange}
+            />
+            <label htmlFor="description" className="form-label user-label">
+              Description
+            </label>
+          </div>
+          <div className="input-group my-4">
+            <input
+              type="text"
+              className=" input"
+              style={{ width: "100%" }}
+              id="tag"
+              name="tag"
+              value={note.tag}
+              autoComplete="off"
+              required
+              onChange={onChange}
+            />
+            <label htmlFor="tag" className="form-label user-label">
+              Tag
+            </label>
+          </div>
         </div>
         <button
           type="submit"
-          className="btn btn-primary"
+          className="btn btn-primary add-btn"
           onClick={handleaddclick}
+          disabled={note.title.length < 3 || note.description.length < 5}
         >
           Add note
         </button>
