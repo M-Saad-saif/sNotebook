@@ -1,19 +1,26 @@
 const connectToMongoose = require("./db");
 const express = require("express");
-var cors = require('cors')
-var app = express()
+var cors = require("cors");
+var app = express();
 
 // Connect to MongoDB
 connectToMongoose();
 
 // Enable CORS for all origins (for now)
-app.use(cors())
+app.use(
+  cors({
+    origin: [
+      "https://snotebook.vercel.app", // Your Vercel frontend URL
+      "http://localhost:3000", // For local development
+    ],
+  })
+);
 
 // Use environment variable or default port
 const port = process.env.PORT || 5000;
 
 // Middleware to parse JSON
-app.use(express.json())
+app.use(express.json());
 
 // Routes
 app.use("/api/auth", require("./routes/auth"));
