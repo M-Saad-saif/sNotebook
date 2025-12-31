@@ -19,7 +19,7 @@ export default function Signup(props) {
     e.preventDefault();
     const { name, email, password } = credential;
 
-    const response = await fetch("http://localhost:5000/api/auth/create", {
+    const response = await fetch("http://192.168.18.106:5000/api/auth/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

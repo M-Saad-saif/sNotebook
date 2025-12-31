@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link , useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router";
 
 export default function Login(props) {
   const [showPassword, setShowPassword] = useState("");
@@ -14,7 +15,7 @@ export default function Login(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/api/auth/login", {
+    const response = await fetch("http://192.168.18.106:5000/api/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,7 +27,9 @@ export default function Login(props) {
     });
     const json = await response.json();
     console.log(json);
+
     if (json.success) {
+      // save the auth and redirecting
       localStorage.setItem("token", json.authtoken);
       history("/");
       props.showAlert("LogedIn successfully", "success");

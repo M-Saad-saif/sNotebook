@@ -2,13 +2,19 @@ import React, { useContext, useEffect, useState, useRef } from "react";
 import noteContext from "../context/notes/noteContext";
 import Noteitems from "./Noteitems";
 import Addnote from "./Addnote";
+import { useNavigate } from "react-router";
 
 export default function Notes() {
+  const navigate = useNavigate();
   const context = useContext(noteContext);
   const { notes, getNotes, editNote } = context;
 
   useEffect(() => {
-    getNotes();
+    if (localStorage.getItem("token")) {
+      getNotes();
+    } else {
+      navigate("/login");
+    }
     // eslint-disable-next-line
   }, []);
 
@@ -66,10 +72,7 @@ export default function Notes() {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header text-center  ">
-              <h1
-                className="modal-title fs-5 "
-                id="exampleModalLabel "
-              >
+              <h1 className="modal-title fs-5 " id="exampleModalLabel ">
                 Update your Note
               </h1>
             </div>
@@ -160,4 +163,3 @@ export default function Notes() {
     </>
   );
 }
-

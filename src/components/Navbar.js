@@ -1,15 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+// import { useLocation, useNavigate } from "react-router";
 
 export default function Navbar() {
   let location = useLocation();
+  let navigate = useNavigate();
+
+  const handlelogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-       <i className="fa-solid fa-book-skull"></i>s.NoteBook
+          <i className="fa-solid fa-book-skull"></i>s.NoteBook
         </Link>
         <button
           className="navbar-toggler"
@@ -42,11 +48,31 @@ export default function Navbar() {
               </Link>
             </li>
           </ul>
-          <form className="d-flex" role="search">
-         <Link className="btn btn-primary mx-2" to="/login" role="button">Login</Link>
-         <Link className="btn btn-primary" to="/signup" role="button">Signup</Link>
-         <Link className="btn btn-primary mx-2" to="/" role="button">GitHub</Link>
-          </form>
+          {!localStorage.getItem("token") ? (
+            <form className="d-flex" role="search">
+              <Link className="btn btn-primary mx-2 right-links" to="/login">
+                Login
+              </Link>
+              <Link className="btn btn-primary right-links"  to="/signup" role="button">
+                Signup
+              </Link>
+              <Link className="btn btn-primary mx-2 right-links" to="/" role="button">
+                GitHub
+              </Link>
+            </form>
+          ) : (
+            <>
+              <button
+                className="btn btn-primary mx-2 my-0"
+                onClick={handlelogout}
+              >
+                Logout
+              </button>
+                <Link className="btn btn-primary " to="/" role="button" >
+                  GitHub
+                </Link>
+            </>
+          )}
         </div>
       </div>
     </nav>

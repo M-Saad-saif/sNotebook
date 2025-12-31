@@ -16,5 +16,5 @@ app.use("/api/auth", require("./routes/auth"));
 app.use("/api/notes", require("./routes/notes"));
 
 app.listen(port, () => {
-  console.log(`s.NoteBook is listening to the port http://localhost:${port}`);
+  console.log(`s.NoteBook is listening to the port http://192.168.18.106:${port}`);
 });

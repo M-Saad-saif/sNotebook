@@ -2,7 +2,7 @@ import { useState } from "react";
 import noteContext from "./noteContext";
 
 const NoteState = (props) => {
-  const host = "http://localhost:5000";
+  const host = "http://192.168.18.106:5000";
 
   const initialNotes = [];
 
@@ -15,8 +15,7 @@ const NoteState = (props) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjk1MDFlNDI0ZWJiODRlNTQ5M2QwY2VkIn0sImlhdCI6MTc2Njg1ODMwNn0.WGmD5X40uDzFf78kzgPi2hgo1RJOxSlRBjsZaQLllfk",
+        "auth-token": localStorage.getItem("token"),
       },
     });
     const json = await response.json();
@@ -32,8 +31,7 @@ const NoteState = (props) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjk1MDFlNDI0ZWJiODRlNTQ5M2QwY2VkIn0sImlhdCI6MTc2Njg1ODMwNn0.WGmD5X40uDzFf78kzgPi2hgo1RJOxSlRBjsZaQLllfk",
+        "auth-token": localStorage.getItem("token"),
       },
       body: JSON.stringify({ title, description, tag }),
       // …
@@ -52,8 +50,7 @@ const NoteState = (props) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjk1MDFlNDI0ZWJiODRlNTQ5M2QwY2VkIn0sImlhdCI6MTc2Njg1ODMwNn0.WGmD5X40uDzFf78kzgPi2hgo1RJOxSlRBjsZaQLllfk",
+        "auth-token": localStorage.getItem("token"),
       },
       body: JSON.stringify({ title, description, tag }),
       // …
@@ -77,8 +74,7 @@ const NoteState = (props) => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjk1MDFlNDI0ZWJiODRlNTQ5M2QwY2VkIn0sImlhdCI6MTc2Njg1ODMwNn0.WGmD5X40uDzFf78kzgPi2hgo1RJOxSlRBjsZaQLllfk",
+        "auth-token": localStorage.getItem("token"),
       },
       body: JSON.stringify({ title, description, tag }),
       // …
