@@ -3,18 +3,27 @@ const express = require("express");
 var cors = require('cors')
 var app = express()
 
+// Connect to MongoDB
 connectToMongoose();
 
+// Enable CORS for all origins (for now)
 app.use(cors())
-const port = 5000;
 
-// using middleware...When a client sends data in JSON format (usually in POST, PUT, PATCH requests), Express cannot read it by default.
+// Use environment variable or default port
+const port = process.env.PORT || 5000;
+
+// Middleware to parse JSON
 app.use(express.json())
 
-// available routes
+// Routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/notes", require("./routes/notes"));
 
+// Simple health check endpoint
+app.get("/health", (req, res) => {
+  res.json({ status: "OK", message: "Server is running" });
+});
+
 app.listen(port, () => {
-  console.log(`s.NoteBook is listening to the port http://192.168.18.106:${port}`);
+  console.log(`s.NoteBook backend running on port ${port}`);
 });
