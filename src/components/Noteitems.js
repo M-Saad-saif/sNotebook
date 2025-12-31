@@ -21,7 +21,6 @@ export default function Noteitems(props) {
           name=""
           id=""
           rows={5}
-          
           style={{
             width: "105%",
             textAlign: "justify",
@@ -33,7 +32,13 @@ export default function Noteitems(props) {
         </p>
         <p className="my-3">
           <strong>Tag: </strong>
-          {note.tag}
+          {note.tag ? (
+            note.tag
+          ) : (
+            <i>
+              <small>No tag..</small>
+            </i>
+          )}
         </p>
       </div>
 

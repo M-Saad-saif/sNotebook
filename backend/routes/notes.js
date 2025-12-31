@@ -22,7 +22,6 @@ router.post(
   [
     body("title", "Title must be required").isLength({ min: 1 }),
     body("description", "Enter description").isLength({ min: 2 }),
-    body("tag", "Enter tag").isLength({ min: 1 }),
   ],
   async (req, res) => {
     try {

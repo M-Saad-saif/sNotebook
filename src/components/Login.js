@@ -49,7 +49,7 @@ export default function Login(props) {
       onSubmit={handleSubmit}
     >
       <div className="login-container justify-content-center">
-        <h1>LOGIN</h1>
+        <h1><i className="fa-solid fa-sign-in-alt small"></i> LOGIN</h1>
 
         <div className="input-group">
           <label htmlFor="email">EMAIL</label>

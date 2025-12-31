@@ -25,6 +25,19 @@ export default function Notes() {
     etag: "---",
   });
 
+  const updateNote = (currentNote) => {
+    setNote({
+      id: currentNote._id,
+      etitle: currentNote.title,
+      edescription: currentNote.description,
+      etag: currentNote.tag,
+    });
+    
+    setTimeout(() => {
+      ref.current.click();
+    }, 0);
+  };
+
   const handleaddclick = (e) => {
     console.log("update note", note);
     editNote(note.id, note.etitle, note.edescription, note.etag);
@@ -33,16 +46,6 @@ export default function Notes() {
 
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
-  };
-
-  const updateNote = (currentNote) => {
-    ref.current.click();
-    setNote({
-      id: currentNote._id,
-      etitle: currentNote.title,
-      edescription: currentNote.description,
-      etag: currentNote.tag,
-    });
   };
 
   const ref = useRef(null);
@@ -115,7 +118,7 @@ export default function Notes() {
                     className="form-control"
                     id="etag"
                     name="etag"
-                    autoComplete
+                    autoComplete="on"
                     value={note.etag}
                     onChange={onChange}
                   />

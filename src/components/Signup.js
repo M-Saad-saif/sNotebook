@@ -53,7 +53,7 @@ export default function Signup(props) {
       onSubmit={handleSubmit}
     >
       <div className="login-container justify-content-center ">
-        <h1>SIGN UP</h1>
+        <h1><small><i className="fa-solid fa-user-plus small"></i></small>  SIGN UP</h1>
 
         <div className="input-group">
           <label htmlFor="username">USERNAME</label>

@@ -34,7 +34,7 @@ export default function Addnote() {
             <input
               type="text"
               className=" input"
-              style={{ width: "100%" }}
+              style={{ width: "100%", border:"1.5px solid black" }}
               id="title"
               name="title"
               value={note.title}
@@ -42,6 +42,7 @@ export default function Addnote() {
               required
               onChange={onChange}
             />
+
             <label htmlFor="title" className="form-label user-label">
               Title
             </label>
@@ -52,7 +53,7 @@ export default function Addnote() {
             <textarea
               type="text"
               className=" input"
-              style={{ width: "100%" }}
+              style={{ width: "100%" , border:"1.5px solid black"}}
               id="description"
               name="description"
               value={note.description}
@@ -69,7 +70,7 @@ export default function Addnote() {
             <input
               type="text"
               className=" input"
-              style={{ width: "100%" }}
+              style={{ width: "100%" , border:"1.5px solid black"}}
               id="tag"
               name="tag"
               value={note.tag}
