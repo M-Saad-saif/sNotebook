@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link , useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import { useNavigate } from "react-router";
 
 export default function Login(props) {
@@ -12,10 +12,12 @@ export default function Login(props) {
   const togglePassword = () => {
     setShowPassword(!showPassword);
   };
+  
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://192.168.18.106:5000/api/auth/login", {
+    const response = await fetch(`${API_URL}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -49,7 +51,9 @@ export default function Login(props) {
       onSubmit={handleSubmit}
     >
       <div className="login-container justify-content-center">
-        <h1><i className="fa-solid fa-sign-in-alt small"></i> LOGIN</h1>
+        <h1>
+          <i className="fa-solid fa-sign-in-alt small"></i> LOGIN
+        </h1>
 
         <div className="input-group">
           <label htmlFor="email">EMAIL</label>

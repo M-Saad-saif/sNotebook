@@ -18,8 +18,8 @@ export default function Signup(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, email, password } = credential;
-
-    const response = await fetch("http://192.168.18.106:5000/api/auth/create", {
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+    const response = await fetch(`${API_URL}/api/auth/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
