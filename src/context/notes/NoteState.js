@@ -10,21 +10,29 @@ const NoteState = (props) => {
 
   // gettin all notes
   const getNotes = async () => {
-    // API calls
-    setProgress(30);
-    const response = await fetch(`${API_URL}/api/notes/fetchallnotes`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
-    });
-    const json = await response.json();
-    console.log(json);
-    setNotes(json);
-    setProgress(100);
-  };
+    try {
+      setProgress(30);
+      const response = await fetch(`${API_URL}/api/notes/fetchallnotes`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"), // Make sure this is correct
+        },
+      });
 
+      const json = await response.json();
+
+      if (!response.ok) {
+        throw new Error(json.error || "Failed to fetch notes");
+      }
+
+      setNotes(json);
+      setProgress(100);
+    } catch (error) {
+      setProgress(100);
+      throw error;
+    }
+  };
   // adding a note
   const addnote = async (title, description, tag) => {
     // API calls

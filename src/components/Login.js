@@ -33,6 +33,7 @@ export default function Login(props) {
     if (json.success) {
       // save the auth and redirecting
       localStorage.setItem("token", json.authtoken);
+      console.log("Token saved:", localStorage.getItem("token"));
       history("/");
       props.showAlert("LogedIn successfully", "success");
     } else {
