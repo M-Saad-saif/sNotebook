@@ -11,15 +11,15 @@ export default function Login(props) {
 
   const togglePassword = () => {
     setShowPassword(!showPassword);
-  };
-  
+  };  
+
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await fetch(`${API_URL}/api/auth/login`, {
       method: "POST",
-      headers: {
+      headers: {  
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -36,7 +36,7 @@ export default function Login(props) {
       history("/");
       props.showAlert("LogedIn successfully", "success");
     } else {
-      props.showAlert("invalid credentials", "danger");
+      props.showAlert("Wrong username or password", "danger");
     }
   };
 

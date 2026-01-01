@@ -1,33 +1,56 @@
-const connectToMongoose = require("./db");
 const express = require("express");
-var cors = require("cors");
-var app = express();
+const cors = require("cors");
+const connectToMongoose = require("./db");
+
+const app = express();
 
 // Connect to MongoDB
 connectToMongoose();
 
-// Enable CORS for all origins (for now)
-// Allow only your deployed frontend
-app.use(cors({
-    origin: 'https://s-notebook.vercel.app', // frontend URL
-    methods: ['GET','POST','PUT','DELETE'],
-}));
+// Allowed frontend origins
+const allowedOrigins = [
+  "http://localhost:3000",          // local frontend
+  "https://s-notebook.vercel.app",  // deployed frontend
+];
 
-// Use environment variable or default port
-const port = process.env.PORT || 5000;
+// CORS middleware - FIXED VERSION
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // Allow requests with no origin like Postman, curl, mobile apps
+      if (!origin) return callback(null, true);
 
-// Middleware to parse JSON
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("CORS error: Origin not allowed"), false);
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization", "auth-token"]
+  })
+);
+
+// Handle preflight requests
+// app.options("*", cors());
+
+// Middleware to parse JSON requests
 app.use(express.json());
 
 // Routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/notes", require("./routes/notes"));
 
-// Simple health check endpoint
+// Health check endpoint
 app.get("/health", (req, res) => {
   res.json({ status: "OK", message: "Server is running" });
 });
 
+// Port
+const port = process.env.PORT || 5000;
+
+// Start server
 app.listen(port, () => {
   console.log(`s.NoteBook backend running on port http://localhost:${port}`);
 });
