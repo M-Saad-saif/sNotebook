@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-// import { useLocation, useNavigate } from "react-router";
+import UserProfile from "./UserProfile";
 
 export default function Navbar() {
+  // const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
   const [isOpen, setIsOpen] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
   let location = useLocation();
   let navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
-    setIsOpen(false); // Close menu after logout
+    setIsOpen(false);
+    setShowProfileModal(false);
   };
 
   const toggleMenu = () => {
@@ -19,6 +22,22 @@ export default function Navbar() {
 
   const closeMenu = () => {
     setIsOpen(false);
+  };
+
+  // Open profile modal
+  const openProfileModal = () => {
+    setShowProfileModal(true);
+  };
+
+  // Close profile modal
+  const closeProfileModal = () => {
+    setShowProfileModal(false);
+  };
+
+  // for mobile
+  const openProfileAndCloseMenu = () => {
+    openProfileModal();
+    closeMenu();
   };
 
   return (
@@ -64,25 +83,34 @@ export default function Navbar() {
                   <Link className="btn btn-primary mx-1" to="/signup">
                     Signup
                   </Link>
+                  <Link
+                    className="btn btn-primary mx-1"
+                    style={{ height: "50%", alignSelf: "end" }}
+                    to="https://github.com/M-Saad-saif"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    GitHub
+                  </Link>
                 </>
               ) : (
-                <button className="btn btn-primary mx-0 my-0" onClick={handleLogout}>
-                  Logout
-                </button>
-              )}
-              <Link
-                className="btn btn-primary mx-1"
-                style={{height:"50%" ,alignSelf: "end"}}
-                to="https://github.com/M-Saad-saif"
-                target="_blank"
-                rel="noopener noreferrer"
+                <>
+                  <button
+                    className="btn btn-primary mx-0 my-0"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
 
-              >
-                GitHub
-              </Link>
+                  <div className="profile-icon" onClick={openProfileModal}>
+                    <i className="fa-solid fa-user"></i>
+                  </div>
+           
+                </>
+              )}
             </div>
           </div>
-
+          {/* =========================================================================================================== */}
           {/* Mobile Hamburger Button */}
           <button
             className={`navbar-toggler ${isOpen ? "open" : ""}`}
@@ -157,12 +185,20 @@ export default function Navbar() {
               </Link>
             </>
           ) : (
-            <button
-              className="btn btn-primary btn-block"
-              onClick={handleLogout}
-            >
-              <i className="fa-solid fa-sign-out-alt"></i> Logout
-            </button>
+            <>
+              <button
+                className="btn btn-primary btn-block"
+                onClick={openProfileAndCloseMenu}
+              >
+                <i className="fa-solid fa-user"></i> Profile
+              </button>
+              <button
+                className="btn btn-primary btn-block"
+                onClick={handleLogout}
+              >
+                <i className="fa-solid fa-sign-out-alt"></i> Logout
+              </button>
+            </>
           )}
           <Link
             className="btn btn-primary btn-block"
@@ -173,6 +209,10 @@ export default function Navbar() {
           >
             <i className="fab fa-github"></i> GitHub
           </Link>
+          <UserProfile
+            showProfileModal={showProfileModal}
+            closeProfileModal={closeProfileModal}
+          />
         </div>
       </div>
     </>

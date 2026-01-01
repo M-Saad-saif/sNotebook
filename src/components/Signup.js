@@ -17,8 +17,33 @@ export default function Signup(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // verfying passwords
+    if (credential.password !== credential.cpassword) {
+      props.showAlert("Passwords donot match", "danger");
+      return;
+    }
+
+    // Validate password length
+    if (credential.password.length < 5) {
+      props.showAlert("Password must be at least 5 characters", "danger");
+      return;
+    }
+
+    // Validate email
+    if (!credential.email || !credential.email.includes("@")) {
+      props.showAlert("Please enter a valid email", "danger");
+      return;
+    }
+
+    // Validate name
+    if (!credential.name.trim()) {
+      props.showAlert("Name is required", "danger");
+      return;
+    }
+
     const { name, email, password } = credential;
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
     const response = await fetch(`${API_URL}/api/auth/create`, {
       method: "POST",
       headers: {
@@ -32,7 +57,7 @@ const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
     });
     const json = await response.json();
     console.log(json);
-    
+
     if (json.success) {
       localStorage.setItem("token", json.authtoken);
       history("/");
@@ -46,6 +71,8 @@ const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
     setCredential({ ...credential, [e.target.name]: e.target.value });
   };
 
+  // Real-time password match indicator (optional)
+  const passwordsMatch = credential.password === credential.cpassword;
   return (
     <form
       action=""
@@ -53,7 +80,12 @@ const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
       onSubmit={handleSubmit}
     >
       <div className="login-container justify-content-center ">
-        <h1><small><i className="fa-solid fa-user-plus small"></i></small>  SIGN UP</h1>
+        <h1>
+          <small>
+            <i className="fa-solid fa-user-plus small"></i>
+          </small>{" "}
+          SIGN UP
+        </h1>
 
         <div className="input-group">
           <label htmlFor="username">USERNAME</label>
@@ -131,6 +163,15 @@ const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
               color: "black",
             }}
           ></i>
+          {credential.cpassword && (
+            <div
+              className={`form-text ${
+                passwordsMatch ? "text-success" : "text-danger"
+              }`}
+            >
+              {passwordsMatch ? " Passwords match" : " Passwords don't match"}
+            </div>
+          )}
         </div>
 
         <button className="my-1" type="submit">

@@ -2,14 +2,16 @@ import { useState } from "react";
 import noteContext from "./noteContext";
 
 const NoteState = (props) => {
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
   const initialNotes = [];
 
   const [notes, setNotes] = useState(initialNotes);
+  const { setProgress } = props;
 
   // gettin all notes
   const getNotes = async () => {
     // API calls
+    setProgress(30);
     const response = await fetch(`${API_URL}/api/notes/fetchallnotes`, {
       method: "GET",
       headers: {
@@ -20,12 +22,15 @@ const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
     const json = await response.json();
     console.log(json);
     setNotes(json);
+    setProgress(100);
   };
 
   // adding a note
   const addnote = async (title, description, tag) => {
     // API calls
     // adding note from backend
+    setProgress(30);
+
     const response = await fetch(`${API_URL}/api/notes/addnote`, {
       method: "POST",
       headers: {
@@ -39,10 +44,13 @@ const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
     // adding note from frontend
     setNotes(notes.concat(note));
     console.log("adding a note", note);
+    setProgress(100);
   };
 
   // deleteign note
   const deleteNote = async (id, title, description, tag) => {
+    setProgress(30);
+
     // API calls
     // deleting note from backend
     const response = await fetch(`${API_URL}/api/notes/deletenote/${id}`, {
@@ -63,10 +71,13 @@ const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
       return note._id !== id;
     });
     setNotes(newNotes);
+    setProgress(100);
   };
 
   // editing note
   const editNote = async (id, title, description, tag) => {
+    setProgress(30);
+
     // API calls
     // edit note from backend
     const response = await fetch(`${API_URL}/api/notes/updatenote/${id}`, {
@@ -94,6 +105,7 @@ const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
       }
     }
     setNotes(newNotes);
+    setProgress(100);
   };
 
   return (

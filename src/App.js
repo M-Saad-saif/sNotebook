@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
+import LoadingBar from "react-top-loading-bar";
 
 function App() {
   const [alert, setAlert] = useState(null);
@@ -21,14 +22,20 @@ function App() {
       setAlert(null);
     }, 1500);
   };
+  const [progress, setProgress] = useState(0);
 
   return (
     <>
-      <NoteState>
+      <NoteState setProgress={setProgress}>
         <Router>
-        
+
+          <LoadingBar
+            color="#ff0000ff"
+            progress={progress}
+            onLoaderFinished={() => setProgress(0)}
+          />
+
           <Navbar />
-          ,
           <Alert alert={alert} />
           <div className="container">
             <Routes>

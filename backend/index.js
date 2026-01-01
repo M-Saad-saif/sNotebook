@@ -10,7 +10,7 @@ connectToMongoose();
 app.use(
   cors({
     origin: [
-      "https://snotebook.vercel.app", // Your Vercel frontend URL
+      "https://snotebook.vercel.app", 
       "http://localhost:3000", // For local development
     ],
   })
@@ -32,5 +32,5 @@ app.get("/health", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`s.NoteBook backend running on port ${port}`);
+  console.log(`s.NoteBook backend running on port http://localhost:${port}`);
 });

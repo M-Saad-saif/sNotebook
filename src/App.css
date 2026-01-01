@@ -272,11 +272,14 @@ button:hover {
 .alert {
   width: 24%;
   position: fixed;
-  justify-self: right;
+  justify-self: center;
   right: 15px;
   /* top: 6.5%; */
+  z-index: 20;
   margin-top: 5px;
   animation: fadeIn 0.2s ease-in-out;
+  border: 1px solid;
+  justify-self: anchor-center;
 }
 
 @keyframes fadeIn {
@@ -288,6 +291,7 @@ button:hover {
     opacity: 1;
   }
 }
+
 
 
 /* ============================Link css============================ */
@@ -389,6 +393,9 @@ button:hover {
 .navbar-actions {
   display: flex;
   gap: 0.5rem;
+  align-items: center;
+  right: 12px;
+  position: relative;
 }
 
 /* Mobile Toggler Button */
@@ -561,4 +568,398 @@ button:hover {
   transform: translateY(-2px);
   box-shadow: 3px 4px rgba(0, 0, 0);
   color: white;
+}
+
+/* .profile-icon {
+  margin: 11px 4px;
+  right: 12px;
+  position: relative;
+} */
+
+/* ========================about css ================================= */
+@import url("https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css");
+@import url("https://fonts.googleapis.com/css2?family=Jura:wght@500;600;900&display=swap");
+
+
+h1 {
+  text-align: center;
+}
+
+ul.product-plans {
+  /* width: min(60rem, 90%); */
+  margin-inline: auto;
+  display: flex;
+  row-gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+}
+
+ul.product-plans li.product-plan:nth-child(1) {
+  --accent-color: #fa0038;
+  background-color: white;
+}
+
+ul.product-plans li.product-plan:nth-child(2) {
+  --accent-color: #164fa9;
+  background-color: white;
+}
+
+ul.product-plans li.product-plan:nth-child(3) {
+  --accent-color: #1a9b8b;
+  background-color: white;
+}
+
+ul.product-plans li.product-plan {
+  --overlap-size: 1.5rem;
+  --border-radius: 5rem;
+  width: min(15rem, 100%);
+  margin-inline: var(--overlap-size);
+  padding-block: 2rem;
+  display: grid;
+  grid-template-rows: max-content max-content 1fr max-content;
+  gap: 0.5rem;
+  border-radius: var(--border-radius) 0 var(--border-radius) 0;
+  box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.5);
+}
+
+ul.product-plans li.product-plan .title {
+  font-size: 1.5rem;
+  color: var(--accent-color);
+  text-align: center;
+  padding: 0px 10px;
+}
+
+ul.product-plans li.product-plan .price {
+  margin-right: calc(var(--overlap-size) * -1);
+  justify-self: end;
+  padding-block: 0.25rem;
+  padding-inline: var(--overlap-size);
+  background-color: var(--accent-color);
+  color: white;
+  position: relative;
+}
+
+ul.product-plans li.product-plan .price::after {
+  content: "";
+  position: absolute;
+  height: var(--overlap-size);
+  width: var(--overlap-size);
+  right: 0;
+  top: 100%;
+  background-color: inherit;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+
+ul.product-plans li.product-plan .btn {
+  justify-self: start;
+  margin-left: calc(var(--overlap-size) * -1);
+  padding-block: 0.5rem;
+  padding-inline: 2.5rem;
+
+  border: none;
+  font-family: inherit;
+  color: white;
+  font-size: 1.1rem;
+
+  background-color: var(--accent-color);
+  background-image: linear-gradient(transparent 50%, rgba(0, 0, 0, 0.25) 0);
+  background-size: 100% 200%;
+  transition: background-position 100ms ease;
+
+  position: relative;
+  cursor: pointer;
+}
+
+ul.product-plans li.product-plan .btn:focus-visible {
+  outline-offset: 5px;
+  outline: 2px solid var(--accent-color);
+  background-position: 0 100%;
+}
+
+ul.product-plans li.product-plan .btn:hover {
+  background-position: 0 100%;
+}
+
+ul.product-plans li.product-plan .btn::after {
+  content: "";
+  position: absolute;
+  height: var(--overlap-size);
+  width: var(--overlap-size);
+  left: 0;
+  bottom: 100%;
+  background-color: inherit;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
+ul.product-plans li.product-plan .btn:active {
+  transform: scale(0.95);
+}
+
+ul.product-plans li.product-plan .btn:active::after {
+  transform-origin: left bottom;
+  transform: scale(0.9);
+}
+
+ul.product-plans li.product-plan .features {
+  align-self: flex-start;
+  list-style: none;
+  padding-inline: 1rem;
+  display: grid;
+}
+
+ul.product-plans li.product-plan .features li:not(:first-child) {
+  border-top: 1px solid rgb(200, 200, 200);
+}
+
+ul.product-plans li.product-plan .features li {
+  /* padding: 0.5rem; */
+  display: grid;
+  gap: 1rem;
+  text-align: justify;
+}
+
+ul.product-plans li.product-plan .features li::before {
+  font-family: "Font Awesome 6 Pro";
+  font-weight: 900;
+  display: grid;
+  place-items: center;
+}
+
+ul.product-plans li.product-plan .features li.check::before {
+  content: "\2713";
+  color: green;
+}
+
+ul.product-plans li.product-plan .features li.cross::before {
+  content: "\d7";
+  color: red;
+}
+
+.credits {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+.credits a {
+  color: var(--color);
+}
+
+
+
+/* ===========================================profile icon=========================================  */
+.profile-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: #007bff;
+  color: white;
+  border-radius: 50%;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.profile-icon:hover {
+  background: #0056b3;
+  transform: scale(1.1);
+}
+
+.profile-icon i {
+  font-size: 1.2rem;
+}
+
+.profile-modal-backdrop {
+  display: none;
+  position: fixed;
+  top: 0px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-modal-backdrop.show {
+  display: flex;
+}
+
+.profile-modal-content {
+  background: white;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1.5rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.profile-modal-header h5 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.profile-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #6c757d;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-modal-close:hover {
+  color: #000;
+}
+
+.profile-modal-body {
+  padding: 1.5rem;
+}
+
+.profile-loading {
+  text-align: center;
+  padding: 2rem;
+}
+
+.profile-loading .spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.profile-error {
+  text-align: center;
+  padding: 2rem;
+  color: #dc3545;
+}
+
+.profile-error i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.user-details {
+  text-align: center;
+}
+
+.user-avatar {
+  width: 80px;
+  height: 80px;
+  background: #f8f9fa;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  color: #007bff;
+  border: 3px solid #007bff;
+}
+
+.user-info {
+  text-align: left;
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #495057;
+  min-width: 100px;
+}
+
+.info-value {
+  color: #212529;
+  text-align: right;
+  word-break: break-word;
+  max-width: 60%;
+}
+
+.truncated-id {
+  font-family: monospace;
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.profile-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #dee2e6;
+  gap: 10px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .profile-modal-content {
+    width: 95%;
+    margin: 20px;
+  }
+
+  .info-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .info-value {
+    text-align: left;
+    max-width: 100%;
+  }
 }
