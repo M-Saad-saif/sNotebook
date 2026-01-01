@@ -30,7 +30,7 @@ function App() {
         <Router>
 
           <LoadingBar
-            color="#ff0000ff"
+            color="#2b00ffff"
             progress={progress}
             onLoaderFinished={() => setProgress(0)}
           />

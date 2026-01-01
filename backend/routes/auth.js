@@ -1,13 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
-const Note = require("../models/Note");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
 const fetchuser = require("../middleware/fetchuser");
 
-const JWT_SECRET = "iamcaptainsaadsaif";
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // ROUTE 1: creating a user using : POST '/api/auth/create. no login required
 router.post(
@@ -138,51 +137,6 @@ router.post("/getuser", fetchuser, async (req, res) => {
   } catch (error) {
     console.log(error.message);
     res.status(500).json("some error occured");
-  }
-});
-
-// ROUTE 4: Deleting user: DELETE '/api/auth/deleteuser. login required
-router.post("/deleteuser", fetchuser, async (req, res) => {
-  console.log("🔥 DELETE USER ROUTE HIT");
-  console.log("BODY:", req.body);
-
-  try {
-    const userId = req.user.id;
-    const user = await User.findById(userId).select("+password");
-
-    if (!user) {
-      return res.status(404).json({ success: false, error: "User not found" });
-    }
-
-    const { password } = req.body;
-
-    if (!password) {
-      return res
-        .status(400)
-        .json({ success: false, error: "Password is required" });
-    }
-
-    const comparePass = await bcrypt.compare(password, user.password);
-
-    if (!comparePass) {
-      return res
-        .status(400)
-        .json({ success: false, error: "Invalid password" });
-    }
-
-    await Note.deleteMany({ user: userId });
-    await User.findByIdAndDelete(userId);
-
-    res.json({
-      success: true,
-      message: "Account deleted successfully",
-    });
-  } catch (error) {
-    console.error("Delete user error:", error);
-    res.status(500).json({
-      success: false,
-      error: "Internal server error",
-    });
   }
 });
 

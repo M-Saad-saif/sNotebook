@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 // Use environment variable for MongoDB Atlas in production, local for development
 const mongoURI = process.env.MONGODB_URI || "mongodb://localhost:27017/notebook";
+// const mongoURI =  "mongodb://localhost:27017/notebook";
 
 const connectToMongoose = async () => {
   try {
