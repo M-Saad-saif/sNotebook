@@ -7,14 +7,11 @@ var app = express();
 connectToMongoose();
 
 // Enable CORS for all origins (for now)
-app.use(
-  cors({
-    origin: [
-      "https://s-notebook.vercel.app", 
-      "http://localhost:3000", // For local development
-    ],
-  })
-);
+// Allow only your deployed frontend
+app.use(cors({
+    origin: 'https://s-notebook.vercel.app', // frontend URL
+    methods: ['GET','POST','PUT','DELETE'],
+}));
 
 // Use environment variable or default port
 const port = process.env.PORT || 5000;
