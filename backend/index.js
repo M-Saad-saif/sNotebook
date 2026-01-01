@@ -10,7 +10,7 @@ connectToMongoose();
 app.use(
   cors({
     origin: [
-      "https://snotebook.vercel.app", 
+      "https://s-notebook.vercel.app", 
       "http://localhost:3000", // For local development
     ],
   })
