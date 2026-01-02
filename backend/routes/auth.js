@@ -32,7 +32,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const salt = await bcrypt.genSalt(10); //generate random number
+    const salt = await bcrypt.genSalt(10); //generate random numbers
     const securePass = await bcrypt.hash(req.body.password, salt); // hash your pasword by adding somwthing
 
     // if user exist with email ... error and bad status will return

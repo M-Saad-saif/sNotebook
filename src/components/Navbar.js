@@ -4,7 +4,7 @@ import UserProfile from "./UserProfile";
 
 export default function Navbar() {
   // const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);// states for mobile
   const [showProfileModal, setShowProfileModal] = useState(false);
   let location = useLocation();
   let navigate = useNavigate();

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {   useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // import { useNavigate } from "react-router";
 
@@ -11,15 +11,16 @@ export default function Login(props) {
 
   const togglePassword = () => {
     setShowPassword(!showPassword);
-  };  
+  };
 
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
+  // loging in
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await fetch(`${API_URL}/api/auth/login`, {
       method: "POST",
-      headers: {  
+      headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -33,7 +34,6 @@ export default function Login(props) {
     if (json.success) {
       // save the auth and redirecting
       localStorage.setItem("token", json.authtoken);
-      console.log("Token saved:", localStorage.getItem("token"));
       history("/");
       props.showAlert("LogedIn successfully", "success");
     } else {
