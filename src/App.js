@@ -28,14 +28,13 @@ function App() {
     <>
       <NoteState setProgress={setProgress}>
         <Router>
-
           <LoadingBar
             color="#ffffffff"
             progress={progress}
             onLoaderFinished={() => setProgress(0)}
           />
 
-          <Navbar />
+          <Navbar showAlert={showAlert} />
           <Alert alert={alert} />
           <div className="container">
             <Routes>

@@ -6,6 +6,11 @@ export default function Noteitems(props) {
   const { deleteNote } = context;
   const { note, updateNote } = props;
 
+  const handledeletebtn = () => {
+    deleteNote(note._id);
+    props.showAlert("Note Deleted", "success");
+  };
+
   return (
     <div className="brutalist-card mx-3 my-3">
       <div className="brutalist-card__header ">
@@ -45,9 +50,7 @@ export default function Noteitems(props) {
       <i
         title="Delete note"
         className="fa-solid fa-trash-can trash-icon"
-        onClick={() => {
-          deleteNote(note._id);
-        }}
+        onClick={handledeletebtn}
       ></i>
       <i
         title="Update note"

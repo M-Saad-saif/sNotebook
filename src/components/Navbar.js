@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import UserProfile from "./UserProfile";
 
-export default function Navbar() {
+export default function Navbar(props) {
   // const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
   const [isOpen, setIsOpen] = useState(false);// states for mobile
   const [showProfileModal, setShowProfileModal] = useState(false);
@@ -14,6 +14,7 @@ export default function Navbar() {
     navigate("/login");
     setIsOpen(false);
     setShowProfileModal(false);
+    props.showAlert("Logged out successfully", "success")
   };
 
   const toggleMenu = () => {

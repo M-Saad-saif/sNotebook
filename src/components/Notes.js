@@ -4,7 +4,7 @@ import Noteitems from "./Noteitems";
 import Addnote from "./Addnote";
 import { useNavigate } from "react-router";
 
-export default function Notes() {
+export default function Notes(props) {
   const navigate = useNavigate();
   const context = useContext(noteContext);
   const { notes, getNotes, editNote } = context;
@@ -36,12 +36,14 @@ export default function Notes() {
     setTimeout(() => {
       ref.current.click();
     }, 0);
+    
   };
-
+  
   const handleaddclick = (e) => {
     console.log("update note", note);
     editNote(note.id, note.etitle, note.edescription, note.etag);
     refClose.current.click();
+    props.showAlert("Note Updated", "success");
   };
 
   const onChange = (e) => {
@@ -53,7 +55,7 @@ export default function Notes() {
 
   return (
     <>
-      <Addnote />
+      <Addnote showAlert={props.showAlert}/>
       <button
         type="button"
         className="btn btn-primary d-none"
@@ -159,7 +161,7 @@ export default function Notes() {
         {/* adding notes */}
         {notes.map((note) => {
           return (
-            <Noteitems key={note._id} updateNote={updateNote} note={note} />
+            <Noteitems key={note._id} showAlert={props.showAlert} updateNote={updateNote} note={note} />
           );
         })}
       </div>

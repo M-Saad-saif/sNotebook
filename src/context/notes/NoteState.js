@@ -56,7 +56,7 @@ const NoteState = (props) => {
   };
 
   // deleteign note
-  const deleteNote = async (id, title, description, tag) => {
+  const deleteNote = async (id, title, description, tag, props) => {
     setProgress(30);
 
     // API calls
